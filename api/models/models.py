@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Date
 from sqlalchemy.orm import relationship
-from database import Base
+from database.database import Base
 
 class Garage(Base):
     __tablename__ = "garages"
@@ -10,7 +10,7 @@ class Garage(Base):
     location = Column(String)
     city = Column(String)
     capacity = Column(Integer)
-    cars = relationship("Car", back_populates="garage")
+    cars = relationship("Car", back_populates="garages")
     maintenances = relationship("Maintenance", back_populates="garage")
 
 class Car(Base):
@@ -22,8 +22,14 @@ class Car(Base):
     productionYear = Column(Integer)
     licensePlate = Column(String)
     garage_id = Column(Integer, ForeignKey('garages.id'))
-    garage = relationship("Garage", back_populates="cars")
+    garages = relationship("Garage", secondary="car_garage", back_populates="cars")
     maintenances = relationship("Maintenance", back_populates="car")
+
+class CarGarage(Base):
+    __tablename__ = "car_garage"
+
+    car_id = Column(Integer, ForeignKey('cars.id'), primary_key=True)
+    garage_id = Column(Integer, ForeignKey('garages.id'), primary_key=True)
 
 class Maintenance(Base):
     __tablename__ = "maintenances"

@@ -3,7 +3,7 @@ from fastapi.exceptions import RequestValidationError
 from starlette.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import garage_router
+from routers import garage_router, car_router, maintenance_router
 
 app = FastAPI()
 
@@ -24,7 +24,10 @@ async def validation_exception_handler(request, exc: RequestValidationError):
 
 app.include_router(garage_router.router, prefix="/garages", tags=["Garages"])
 
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the Garage API!"}
+app.include_router(car_router.router,prefix="/cars",tags=["Cars"])
+
+app.include_router(maintenance_router.router,prefix="/maintenance",tags=["Maintenances"])
+
+
+
 

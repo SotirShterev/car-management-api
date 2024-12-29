@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from database import get_db
+from database.database import get_db
 from services.garageservice import create_garage, get_garage_by_id, update_garage, delete_garage,get_all_garages
 from dtos.garagedto import CreateGarageDTO, UpdateGarageDTO, ResponseGarageDTO
 
