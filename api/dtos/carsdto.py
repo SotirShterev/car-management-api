@@ -3,17 +3,17 @@ from typing import Optional, List
 from dtos.garagedto import ResponseGarageDTO
 
 class CreateCarDTO(BaseModel):
-    make: str = Field(..., min_length=1)
-    model: str = Field(..., min_length=1)
-    productionYear: int = Field(..., ge=1886)
-    licensePlate: str = Field(..., min_length=1)
+    make: str = Field(...)
+    model: str = Field(...)
+    productionYear: int = Field(...)
+    licensePlate: str = Field(...)
     garageIds: List[Optional[int]] = Field(None)
 
 class UpdateCarDTO(BaseModel):
-    make: Optional[str] = Field(None, min_length=1)
-    model: Optional[str] = Field(None, min_length=1)
-    productionYear: Optional[int] = Field(None, ge=1886)
-    licensePlate: Optional[str] = Field(None, min_length=1)
+    make: Optional[str] = Field(None)
+    model: Optional[str] = Field(None)
+    productionYear: Optional[int] = Field(None)
+    licensePlate: Optional[str] = Field(None)
     garageIds: List[Optional[int]] = Field(None)
 
 class ResponseCarDTO(BaseModel):

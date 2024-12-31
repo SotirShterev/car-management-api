@@ -1,5 +1,4 @@
 from typing import Optional
-
 from fastapi import HTTPException
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
@@ -66,24 +65,21 @@ def delete_car(db: Session, car_id: int) -> None:
     except ValidationError as e:
         raise HTTPException(status_code=400, detail="Bad request")
 
-def get_all_cars(db: Session,carMake: Optional[str] = None, garageId: Optional[int] = None,fromYear: Optional[int] = None, toYear: Optional[int] = None) -> list[ResponseCarDTO]:
+def get_all_cars(db: Session,
+                 carMake: Optional[str] = None,
+                 garageId: Optional[int] = None,
+                 fromYear: Optional[int] = None,
+                 toYear: Optional[int] = None) -> list[ResponseCarDTO]:
     try:
         query = db.query(Car)
-
         if carMake:
             query = query.filter(Car.make.ilike(f"%{carMake}%"))
-
         if garageId is not None:
             query = query.join(Car.garages).filter(Garage.id == garageId)
-
         if fromYear is not None:
             query = query.filter(Car.productionYear >= fromYear)
-
         if toYear is not None:
             query = query.filter(Car.productionYear <= toYear)
-
-        print(str(query))
-
         cars = query.all()
 
         return [ResponseCarDTO.model_validate(car) for car in cars]

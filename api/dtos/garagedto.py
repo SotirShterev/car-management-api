@@ -1,6 +1,11 @@
 from pydantic import BaseModel, Field
 from typing import Optional
 
+class GarageDailyAvailabilityReportDTO(BaseModel):
+    date: str = Field(...)
+    requests: int = Field(...)
+    availableCapacity: int = Field(...)
+
 class CreateGarageDTO(BaseModel):
     name: str = Field(...)
     location: str = Field(...)
@@ -22,3 +27,6 @@ class ResponseGarageDTO(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+
